@@ -4,6 +4,7 @@ import com.back.domain.poast.entity.Post;
 import com.back.domain.poast.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -20,7 +21,7 @@ public class PostController {
     public String writeFrom() {
 
         return """
-                <form action="/posts/write">
+                <form method="POST" action="/posts/write">
                   <input type="text" name="title">
                   <br>
                   <textarea name="content"></textarea>
@@ -29,7 +30,7 @@ public class PostController {
                 </form>
                 """;
     }
-    @GetMapping("/posts/write")
+    @PostMapping("/posts/write")
     @ResponseBody
     public String wrtie(String title, String content){
         Post post = postService.write(title,content);
