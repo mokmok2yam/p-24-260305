@@ -2,26 +2,53 @@ package com.back.domain.poast.controller;
 
 import com.back.domain.poast.entity.Post;
 import com.back.domain.poast.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
+    @GetMapping("/posts/write-form")
+    @ResponseBody
+    public String writeForm() {
+
+        return getWriteForm();
     }
 
-    @GetMapping("/posts/writeForm")
+    @PostMapping("/posts/write")
     @ResponseBody
-    public String writeFrom() {
+    public String write(String title, String content) {
 
+        // 유효성 체크
+        if(title.isBlank()) {
+            return """
+                    <div style="color:red">제목을 입력해주세요.</div>
+                    %s
+                    """.formatted(getWriteForm());
+        }
+
+        if(content.isBlank()) {
+            return """
+                    <div style="color:red">내용을 입력해주세요.</div>
+                    %s
+                    """.formatted(getWriteForm());
+        }
+        //
+
+        Post post = postService.write(title, content);
+
+        return "%d번 글이 작성되었습니다.".formatted(post.getId());
+    }
+
+    private String getWriteForm() {
         return """
-                <form method="POST" action="/posts/write">
+                <form method="post" action="/posts/write">
                   <input type="text" name="title">
                   <br>
                   <textarea name="content"></textarea>
@@ -30,10 +57,5 @@ public class PostController {
                 </form>
                 """;
     }
-    @PostMapping("/posts/write")
-    @ResponseBody
-    public String wrtie(String title, String content){
-        Post post = postService.write(title,content);
-        return "%d번 글이 작성되었습니다.".formatted(post.getId());
-    }
+
 }
