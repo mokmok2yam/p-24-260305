@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Configuration
 @RequiredArgsConstructor
 public class BaseInitData {
+
     @Autowired
     @Lazy
     private BaseInitData self;
@@ -27,12 +28,13 @@ public class BaseInitData {
 
     @Transactional
     public void work1() {
-        if (postService.count() > 0) {
+        if(postService.count() > 0) {
             return;
         }
         Post post1 = postService.write("제목1", "내용1");
         Post post2 = postService.write("제목2", "내용2");
-        Post post3 = postService.write("제목3", "내용3");
+        postService.write("제목3", "내용3");
+
         post1.addComment("댓글 1-1");
         post1.addComment("댓글 1-2");
         post1.addComment("댓글 1-3");

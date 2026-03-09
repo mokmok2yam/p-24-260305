@@ -23,9 +23,9 @@ public class Post extends BaseEntity {
     private String content;
 
     @OneToMany(mappedBy = "post",
-            cascade = {CascadeType.PERSIST,CascadeType.REMOVE},
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     public Post(String title, String content) {
         this.title = title;
@@ -37,10 +37,16 @@ public class Post extends BaseEntity {
         this.content = content;
     }
 
-    //댓글추가
-    public Comment addComment(String  content){
-        Comment comment = new Comment(content,this);
+    // 댓글 추가
+
+    public Comment addComment(String content) {
+        Comment comment = new Comment(content, this);
         comments.add(comment);
+
         return comment;
     }
+
+    // 댓글 수정
+    // 댓글 삭제
+    // 댓글 조회
 }

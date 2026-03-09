@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -77,7 +74,7 @@ public class PostController {
 
         return "modify";
     }
-;
+
     @PostMapping("/posts/{id}/modify")
     @Transactional
     public String modify(@PathVariable int id,
@@ -106,6 +103,7 @@ public class PostController {
     public String detail(@PathVariable int id, Model model) {
         Post post = postService.findById(id).get();
         model.addAttribute("post", post);
+
         return "detail";
     }
 

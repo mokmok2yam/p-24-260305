@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Comment extends BaseEntity {
     private String content;
+
     @ManyToOne
     private Post post;
+
 }
