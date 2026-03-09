@@ -26,8 +26,7 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
-            orphanRemoval = true
-    )
+            orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     public Post(String title, String content) {
@@ -49,17 +48,18 @@ public class Post extends BaseEntity {
         return comment;
     }
 
-    // 댓글 수정
-    // 댓글 삭제
-    public void deleteComment(int id){
-        Comment comment = findCommentById(id).get();
-        comments.remove(comment);
-
-    }
     // 댓글 조회
     public Optional<Comment> findCommentById(int commentId) {
         return comments.stream()
                 .filter(c -> c.getId() == commentId)
                 .findFirst();
     }
+
+    // 댓글 삭제
+    public void deleteComment(int id) {
+        Comment comment = findCommentById(id).get();
+        comments.remove(comment);
+    }
+
+    // 댓글 수정
 }

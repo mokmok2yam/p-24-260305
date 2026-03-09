@@ -38,11 +38,13 @@ public class CommentController {
         post.addComment(form.content);
         return "redirect:/posts/%d".formatted(post.getId());
     }
-    @GetMapping("/posts/{postId}/comments/{commendId}/delete")
+
+    @GetMapping("/posts/{postId}/comments/{commentId}/delete")
     @Transactional
-    public String  delete(@PathVariable int postId, @PathVariable int commentId){
+    public String delete(@PathVariable int postId, @PathVariable int commentId) {
         Post post = postService.findById(postId).get();
         post.deleteComment(commentId);
-        return "redirect:/post/%d".formatted(post.getId());
+
+        return "redirect:/posts/%d".formatted(post.getId());
     }
 }
