@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class CommentController {
         return "redirect:/posts/%d".formatted(post.getId());
     }
 
-    @DeleteMapping("/posts/{postId}/comments/{commentId}/delete")
+    @GetMapping("/posts/{postId}/comments/{commentId}/delete")
     @Transactional
     public String delete(@PathVariable int postId, @PathVariable int commentId) {
         Post post = postService.findById(postId).get();
